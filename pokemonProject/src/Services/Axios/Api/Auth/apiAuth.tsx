@@ -12,7 +12,7 @@ type AuthParams = {
   identificationNumber?: 0;
 };
 
-class ApiService extends BaseService {
+class ApiAuth extends BaseService {
   constructor() {
     super(api); // Utiliza la URL base específica para la API de Pokémon
   }
@@ -69,4 +69,4 @@ class ApiService extends BaseService {
   }
 }
 
-export default ApiService;
+export default ApiAuth;
