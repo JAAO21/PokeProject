@@ -1,0 +1,18 @@
+.containerHeaderPrivate {
+  width: 240px;
+}
+
+.containerTolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: #a91d3a;
+}
+
+.containerNav .MuiButton-root {
+  font-weight: bold;
+}
+
+.containerNav .MuiButton-root:hover {
+  color: #a91d3a;
+}

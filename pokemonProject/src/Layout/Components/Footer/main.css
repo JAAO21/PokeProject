@@ -1,0 +1,27 @@
+footer {
+  margin-top: 23px;
+  width: calc(100%);
+  padding: 10px 0;
+  text-align: center;
+}
+
+.divFooterIcons {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+}
+
+.divFooterIcons a {
+  color: black;
+}
+
+.divFooterIcons a:hover {
+  color: red;
+}
+
+.footerkeyword {
+  font-family: fangsong;
+  font-size: 16px;
+  font-style: italic;
+  color: red;
+}

@@ -22,7 +22,7 @@ class ApiPokemon extends BaseService {
       });
       return response.data; //devuelve la respuesta
     } catch (error) {
-      console.error(error);
+      console.error("Error creating Pokémon:", error);
       throw error; //manejo de errores
     }
   }
@@ -32,7 +32,7 @@ class ApiPokemon extends BaseService {
       const response = await this.instance.get("/");
       return response.data; //devuelve la respuesta
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching Pokémon:", error);
       throw error; //manejo de errores
     }
   }
@@ -43,7 +43,7 @@ class ApiPokemon extends BaseService {
       const response = await this.instance.get("/amountsGetAllPokemon");
       return response.data; //devuelve la respuesta
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching Pokémon amounts:", error);
       throw error; //manejo de errores
     }
   }
@@ -54,7 +54,7 @@ class ApiPokemon extends BaseService {
       const response = await this.instance.get("/datePokemonAmount");
       return response.data; //devuelve la respuesta
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching Pokémon date amounts:", error);
       throw error; //manejo de errores
     }
   }
@@ -73,7 +73,7 @@ class ApiPokemon extends BaseService {
       );
       return response.data;
     } catch (error) {
-      console.error(error);
+      console.error("Error updating Pokémon:", error);
       throw error; //manejo de errores
     }
   }
@@ -84,7 +84,7 @@ class ApiPokemon extends BaseService {
       const response = await this.instance.delete(`/deletePokemon?_id=${_id}`);
       return response.data; //devuelve la respuesta
     } catch (error) {
-      console.error(error);
+      console.error("Error deleting Pokémon:", error);
       throw error; //manejo de errores
     }
   }
