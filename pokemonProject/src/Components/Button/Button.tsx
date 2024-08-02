@@ -1,3 +1,4 @@
+import React, { FC } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
@@ -20,7 +21,7 @@ theme = createTheme(theme, {
   },
 });
 
-const ButtonComponent = ({
+const ButtonComponent: FC<ButtonParams> = ({
   type,
   variant,
   buttonText,
@@ -30,7 +31,7 @@ const ButtonComponent = ({
   isSend,
   component,
   to,
-}: ButtonParams) => {
+}) => {
   return (
     <ThemeProvider theme={theme}>
       <Button
@@ -40,7 +41,7 @@ const ButtonComponent = ({
         onClick={onclick}
         startIcon={isSend ? <SendIcon /> : Icon ? <Icon /> : null}
         style={style}
-        to={to || null}
+        {...(to ? { to } : {})}
       >
         {buttonText}
       </Button>

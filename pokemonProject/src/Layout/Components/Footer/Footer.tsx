@@ -1,21 +1,22 @@
 import GitHubIcon from "@mui/icons-material/GitHub";
 import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon";
 import "./main.css";
+import { BoxComponent } from "../../../Components";
 
 const FooterComponent = () => {
   return (
     <footer>
-      <div className="divFooterIcons">
+      <BoxComponent className="divFooterIcons">
         <a href="https://pokeapi.co/api/v2/pokemon">
           <CatchingPokemonIcon />
         </a>
         <a href="https://github.com/">
           <GitHubIcon />
         </a>
-      </div>
-      <div>
+      </BoxComponent>
+      <BoxComponent>
         <p className="footerkeyword">Copyrigth @jaao21</p>
-      </div>
+      </BoxComponent>
     </footer>
   );
 };

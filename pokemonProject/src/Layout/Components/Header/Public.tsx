@@ -5,15 +5,15 @@ import { Link } from "react-router-dom";
 import { AppBar, Toolbar, Typography } from "@mui/material";
 
 //routes publics
-import { routePublic } from "../../../routes/Publics/routePublic.jsx";
+import { dataRoute } from "../../../Routes/Public/DataRoute";
 
 //componentes
-import ButtonComponent from "../../../components/Button/Button.jsx";
+import { BoxComponent, ButtonComponent } from "../../../Components";
 
 import "./main.css";
 const HeaderPublic = () => {
   return (
-    <div>
+    <BoxComponent>
       <AppBar component="nav" sx={{ backgroundColor: "white" }}>
         <Toolbar>
           <Typography
@@ -32,20 +32,20 @@ const HeaderPublic = () => {
           >
             Api Pokemon
           </Typography>
-          <div className="containerNav">
-            {routePublic.slice(0, 2).map((routes) => (
+          <BoxComponent className="containerNav">
+            {dataRoute.slice(0, 2).map((routes) => (
               <ButtonComponent
                 key={routes.path}
                 component={Link}
-                to={routes.path}
-                Icon={routes.icon}
+                to={routes?.path || ""}
+                Icon={routes?.icon || undefined}
                 buttonText={routes.path.replace("/", "")}
               />
             ))}
-          </div>
+          </BoxComponent>
         </Toolbar>
       </AppBar>
-    </div>
+    </BoxComponent>
   );
 };
 

@@ -1,12 +1,12 @@
 import AppBar from "@mui/material/AppBar";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
-import { MenuComponent } from "../../../Components";
+import { MenuComponent, BoxComponent } from "../../../Components";
 import "./main.css";
 const drawerWidth = 240;
 const HeaderPrivate = () => {
   return (
-    <div className="containerHeaderPrivate">
+    <BoxComponent sx={{ width: "240px" }}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -19,7 +19,7 @@ const HeaderPrivate = () => {
           <MenuComponent />
         </Toolbar>
       </AppBar>
-    </div>
+    </BoxComponent>
   );
 };
 

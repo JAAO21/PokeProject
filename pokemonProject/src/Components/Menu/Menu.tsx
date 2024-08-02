@@ -13,14 +13,14 @@ import Tooltip from "@mui/material/Tooltip";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 
-import { AuthContext } from "../../layouts/AuthProvider/AuthProvider";
+import { AuthContext } from "../../layouts/AuthProvider/AuthProvider"; //arreglar redux
 
 const AccountMenu = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   const { handleLogout } = useContext(AuthContext);
-  const handleClick = (event) => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {

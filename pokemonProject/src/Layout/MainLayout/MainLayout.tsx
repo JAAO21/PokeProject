@@ -1,3 +1,4 @@
+import React, { FC } from "react";
 import Grid from "@mui/material/Grid";
 
 import FooterComponent from "../Components/Footer/Footer.tsx";
@@ -6,7 +7,11 @@ import { HeaderPublic, HeaderPrivate } from "../Components/Header";
 /* import { DrawerComponent } from '../../components'
  */
 
-function MainLayout({ children }) {
+interface MainLayoutProps {
+  children?: React.ReactNode;
+}
+
+const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   const token = localStorage.getItem("token");
   return (
     <Grid
@@ -24,6 +29,6 @@ function MainLayout({ children }) {
       </Grid>
     </Grid>
   );
-}
+};
 
 export default MainLayout;
