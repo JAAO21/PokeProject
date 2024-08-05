@@ -19,7 +19,9 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
       direction="column"
       style={{ minHeight: "100vh", minWidth: "100%", boxSizing: "border-box" }}
     >
-      <Grid item>{token ? <HeaderPrivate /> : <HeaderPublic />}</Grid>
+      <Grid item sx={{ width: "100%" }}>
+        {token ? <HeaderPrivate /> : <HeaderPublic />}
+      </Grid>
 
       <Grid item xs style={{ flexGrow: 1, marginTop: "36px" }}>
         {children}

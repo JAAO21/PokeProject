@@ -1,0 +1,14 @@
+.imgPokemon {
+  height: 200px;
+  width: 250px;
+}
+
+.containerinfoPokemon > p {
+  font-weight: bolder;
+  font-size: 19px;
+}
+
+.containerinfoPokemon > h1 {
+  color: black;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}

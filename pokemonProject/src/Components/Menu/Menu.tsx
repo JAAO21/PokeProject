@@ -13,7 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 
-import { AuthContext } from "../../layouts/AuthProvider/AuthProvider"; //arreglar redux
+import { AuthContext } from "../../Layout/AuthProvider/AuthProvider"; //arreglar redux
 
 const AccountMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);

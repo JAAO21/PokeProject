@@ -4,6 +4,6 @@ interface ImportMetaEnv {
   // otras variables de entorno que puedas tener...
 }
 
-interface ImportMeta {
+export interface ImportMeta {
   readonly env: ImportMetaEnv;
 }

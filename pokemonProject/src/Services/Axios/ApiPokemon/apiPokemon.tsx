@@ -1,4 +1,4 @@
-import { apiPokeApi } from "../../../config";
+import { apiPokeApi } from "../../../../config";
 import BaseService from "../axiosAPi";
 class PokemonService extends BaseService {
   constructor() {
@@ -8,7 +8,7 @@ class PokemonService extends BaseService {
   async getAllPokemon(path: string) {
     try {
       const response = await this.instance.get(`/${path}`);
-      return response.data; // Devuelve los datos de la respuesta
+      return response; // Devuelve los datos de la respuesta
     } catch (error) {
       throw error;
     }

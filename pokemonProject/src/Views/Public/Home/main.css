@@ -1,0 +1,21 @@
+.containerHomeDiv {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 27px;
+  margin-top: 50px;
+}
+
+.containerSearchPokemonHome {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.containerDataPokemonHome {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}

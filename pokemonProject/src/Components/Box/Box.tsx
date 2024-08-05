@@ -1,13 +1,8 @@
 import React, { FC } from "react";
-import { Box, SxProps, Theme } from "@mui/material";
+import { Box } from "@mui/material";
+import { ChildrenSxInterface } from "../../Layout/Types/ChildrenSxInterface";
 
-interface BoxProps {
-  children?: React.ReactNode;
-  sx?: SxProps<Theme>;
-  className?: string;
-}
-
-const BoxComponent: FC<BoxProps> = ({ children, sx, className }) => {
+const BoxComponent: FC<ChildrenSxInterface> = ({ children, sx, className }) => {
   return (
     <Box sx={sx} className={className}>
       {children}

@@ -2,27 +2,22 @@ import React, { FC } from "react";
 import { ElementType } from "react";
 import { SvgIconProps } from "@mui/material/SvgIcon";
 
-import { ButtonComponent, CardComponent } from "../index";
+import { ButtonComponent, CardComponent, BoxComponent } from "../index";
 import { PokeProps } from "../../Layout/Types/PokemonType";
 import "./main.css";
 
 interface PokemonProps {
   data: PokeProps;
-  handleClick: React.MouseEventHandler<HTMLButtonElement>;
-  Icon: ElementType<SvgIconProps>;
-  buttonText: string;
-  component: React.ElementType;
-  to: string;
+  btnData: {
+    handleClick?: React.MouseEventHandler<HTMLButtonElement>;
+    Icon: ElementType<SvgIconProps>;
+    buttonText: string;
+    component: React.ElementType;
+    to: string;
+  };
 }
 
-const PokemonComponent: FC<PokemonProps> = ({
-  data,
-  handleClick,
-  Icon,
-  buttonText,
-  component,
-  to,
-}) => {
+const PokemonComponent: FC<PokemonProps> = ({ data, btnData }) => {
   const damage =
     data?.stats && data.stats.length > 0 ? data.stats[0].base_stat : 0;
   const image = data?.sprites?.other?.dream_world
@@ -30,32 +25,58 @@ const PokemonComponent: FC<PokemonProps> = ({
     : "not img";
   return (
     <CardComponent>
-      <div className="containerPokemon">
-        <div className="containerinfoPokemon">
+      <BoxComponent
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+          gap: "13px",
+        }}
+      >
+        <BoxComponent
+          sx={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: "15px",
+          }}
+          className="containerinfoPokemon"
+        >
           <h1>{data?.name || "Not found"}</h1>
-          <p>Experiencia {data?.base_experience} </p>
+          <p>Experiencia {data?.base_experience || 0} </p>
 
-          <p>Daño {damage}</p>
-        </div>
-        <div className="containerImgPokemon">
+          <p>Daño {damage || 0}</p>
+        </BoxComponent>
+        <BoxComponent
+          sx={{
+            flex: 1,
+            filter: "drop-shadow(0 0 10px rgba(0,0,0,.8))",
+            borderRadius: "0.6rem",
+          }}
+        >
           <img
             src={image}
             alt={data?.name || "Not found"}
             className="imgPokemon"
           />
-        </div>
-        <div className="containerBtnPokemon">
+        </BoxComponent>
+        <BoxComponent
+          sx={{
+            flex: 1,
+            margin: "5px",
+          }}
+        >
           <ButtonComponent
-            component={component || "button"}
+            component={btnData.component || "button"}
             type="submit"
             variant="contained"
-            buttonText={buttonText}
-            onclick={component ? undefined : handleClick}
-            Icon={Icon}
-            to={to ? to : ""}
+            buttonText={btnData.buttonText}
+            onclick={btnData.component ? undefined : btnData.handleClick}
+            Icon={btnData.Icon}
+            to={btnData.to ? btnData.to : ""}
           />
-        </div>
-      </div>
+        </BoxComponent>
+      </BoxComponent>
     </CardComponent>
   );
 };

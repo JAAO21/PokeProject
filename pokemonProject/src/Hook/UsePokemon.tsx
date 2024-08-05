@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import PokemonService from "../Services/Axios/ApiPokemon/ApiPokemon.tsx";
 import { useLoading } from "./UseLoading.tsx";
-import { allPokemon } from "../services/pokemons/pokemonSlice.jsx";
+import { allPokemon } from "../Services/Pokemons/PokemonSlice.tsx";
+import { PokeProps } from "../Layout/Types/PokemonType.tsx";
 export const usePokemon = () => {
-  const [copyData, setCopyData] = useState([]);
+  const [copyData, setCopyData] = useState<PokeProps[]>([]);
   const { loading, setLoading } = useLoading();
   const dispatch = useDispatch();
   const pokemonService = new PokemonService();
@@ -13,7 +14,7 @@ export const usePokemon = () => {
     const axioData = async () => {
       setLoading(true); // Establecer loading en true al comenzar la solicitud
       try {
-        let response;
+        let response = [];
         const responseData = await pokemonService.getAllPokemon("pokemon");
         if (responseData) {
           const pokemonList = responseData.data.results;
@@ -28,8 +29,8 @@ export const usePokemon = () => {
           );
         }
 
-        dispatch(allPokemon(response.length > 1 ? response : response?.data));
-        setCopyData(response.length > 1 ? response : response?.data);
+        dispatch(allPokemon(response.length > 1 ? response : []));
+        setCopyData(response.length > 1 ? response : []);
       } catch (error) {
         console.error(error);
         //falta manejo de erorres
@@ -42,7 +43,7 @@ export const usePokemon = () => {
   return { loading, setLoading, copyData, setCopyData };
 };
 
-const extractPokemonIdFromUrl = (url) => {
+const extractPokemonIdFromUrl = (url: string) => {
   const parts = url.split("/");
   return parts[parts.length - 2];
 };

@@ -6,18 +6,11 @@ import SendIcon from "@mui/icons-material/Send";
 import { ButtonParams } from "./typeParams.tsx";
 
 let theme = createTheme({
-  // Theme customization goes here as usual, including tonalOffset and/or
-  // contrastThreshold as the augmentColor() function relies on these
-});
-theme = createTheme(theme, {
-  // Custom colors created with augmentColor go here
   palette: {
-    dark: theme.palette.augmentColor({
-      color: {
-        main: "#000000",
-      },
-      name: "dark",
-    }),
+    primary: {
+      main: "#000000", // Negro
+      contrastText: "#ffffff", // Blanco para el texto
+    },
   },
 });
 

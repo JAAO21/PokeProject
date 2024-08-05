@@ -13,8 +13,8 @@ import { BoxComponent, ButtonComponent } from "../../../Components";
 import "./main.css";
 const HeaderPublic = () => {
   return (
-    <BoxComponent>
-      <AppBar component="nav" sx={{ backgroundColor: "white" }}>
+    <BoxComponent sx={{ minWidth: "100%" }}>
+      <AppBar component="nav" sx={{ backgroundColor: "white", width: "100%" }}>
         <Toolbar>
           <Typography
             variant="h6"

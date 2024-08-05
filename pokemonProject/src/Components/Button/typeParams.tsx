@@ -1,3 +1,4 @@
+import { SxProps, Theme } from "@mui/material";
 import { ButtonProps } from "@mui/material/Button";
 import { SvgIconProps } from "@mui/material/SvgIcon";
 import { ElementType } from "react";
@@ -12,4 +13,5 @@ export type ButtonParams = {
   isSend?: boolean;
   component?: React.ElementType; // Para soportar cualquier tipo de componente
   to?: string; // `null` es innecesario si `to` es opcional
+  sx?: SxProps<Theme>;
 };
