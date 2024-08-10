@@ -4,7 +4,7 @@ import { SvgIconProps } from "@mui/material/SvgIcon";
 import { ElementType } from "react";
 
 export type ButtonParams = {
-  type?: "button" | "submit" | "reset"; // Especifica los valores permitidos
+  type?: "button" | "submit" | "reset" | "link"; // Especifica los valores permitidos
   variant?: ButtonProps["variant"]; // Usa los tipos de Material-UI para `variant`
   buttonText?: string;
   style?: React.CSSProperties; // Tipo para estilos CSS en línea

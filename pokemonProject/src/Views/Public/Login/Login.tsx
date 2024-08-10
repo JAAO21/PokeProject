@@ -1,21 +1,32 @@
-import { useContext, useState } from "react"; //contexto y estado
+//contexto y estado
+import { useContext, useState } from "react";
 
-import { Avatar, Box, Typography, Link, Container } from "@mui/material";
+import { Avatar, Container } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
-import { AuthContext } from "../../../Layout/AuthProvider/AuthProvider.tsx"; //redux login(token), logout
+//redux login(token)
+import { AuthContext } from "../../../Layout/AuthProvider/AuthProvider.tsx";
+
+//context modal
+import { useModal } from "../../../Context/ModalContext.tsx";
 
 //Apiaxios
 import ApiAuth from "../../../Services/Axios/Api/Auth/apiAuth.tsx";
+
+//views
+import Register from "../Register/Register.tsx";
+
+import SendEmail from "../SendEmail/SendEmail.tsx";
 
 //components
 import {
   TextComponent,
   CardComponent,
   ButtonComponent,
+  BoxComponent,
+  ModalComponent,
 } from "../../../Components";
 
-//estilos
 import "./main.css";
 
 const Login = () => {
@@ -23,8 +34,24 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [optionModal, setOptionModal] = useState("");
   const postLogin = new ApiAuth();
   const { handleLogin } = useContext(AuthContext);
+
+  const { openModal } = useModal();
+
+  const handleOpenModalRegister = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setOptionModal("Register");
+    e.preventDefault();
+    openModal();
+    return;
+  };
+  const handleOpenModalSendEmail = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setOptionModal("ForgotPassword");
+    e.preventDefault();
+    openModal();
+    return;
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAuth({ ...auth, [event.target.name]: event.target.value });
@@ -48,14 +75,15 @@ const Login = () => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <Box
+      <BoxComponent
         sx={{
           marginTop: 8,
           display: "flex",
           flexDirection: "column",
+          justifyContent: "center",
           alignItems: "center",
           padding: 3,
-          boxShadow: "0px 0px 15px rgba(0,0,0,0.2)",
+          filter: "drop-shadow(0 0 15px rgba(0,0,0,.8))",
           borderRadius: 2,
           backgroundColor: "#ffffff",
           backgroundImage:
@@ -76,75 +104,69 @@ const Login = () => {
         >
           <LockOutlinedIcon fontSize="large" />
         </Avatar>
-        <Typography
-          component="h1"
-          variant="h5"
-          sx={{ color: "red", fontWeight: "bold" }}
+
+        <CardComponent
+          sx={{ backgroundColor: "rgba(255, 255, 255, 0.8)", height: "350px" }}
         >
-          Iniciar Sesión
-        </Typography>
-        <CardComponent sx={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }}>
-          <Box
-            component="form"
-            onSubmit={handleLoginForm}
-            noValidate
+          <BoxComponent
             sx={{
               mt: 1,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
             }}
           >
-            <TextComponent
-              required
-              nameText="email"
-              labelText="Email"
-              typeText="email"
-              valueText={auth.email}
-              onChange={handleChange}
-              autoFocus
-            />
-            <TextComponent
-              required
-              nameText="password"
-              labelText="Contraseña"
-              typeText="password"
-              valueText={auth.password}
-              onChange={handleChange}
-              autoComplete="current-password"
-            />
-            <ButtonComponent
-              type="submit"
-              variant="contained"
-              buttonText="Enviar"
-              isSend={true}
-              sx={{ mt: 3, mb: 2 }}
-            />
-            <Link
-              href="http://localhost:5173/ForgotPassword"
-              variant="body2"
-              sx={{ color: "black", textDecoration: "none", mt: 1 }}
+            <form onSubmit={handleLoginForm} className="containerLoginForm">
+              <TextComponent
+                required
+                nameText="email"
+                labelText="Email"
+                typeText="email"
+                valueText={auth.email}
+                onChange={handleChange}
+                autoFocus
+              />
+              <TextComponent
+                required
+                nameText="password"
+                labelText="Contraseña"
+                typeText="password"
+                valueText={auth.password}
+                onChange={handleChange}
+                autoComplete="current-password"
+              />
+              <ButtonComponent
+                type="submit"
+                variant="contained"
+                buttonText="Enviar"
+                isSend={true}
+                sx={{ mt: 3, mb: 2 }}
+              />
+            </form>
+            <BoxComponent
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+              }}
             >
-              ¿Olvidaste tu contraseña?
-            </Link>
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              align="center"
-              sx={{ mt: 2 }}
-            >
-              ¿No tienes una cuenta?{" "}
-              <Link
-                href="http://localhost:5173/register"
-                variant="body2"
+              <ButtonComponent
+                type={"link"}
+                buttonText={"¿Olvidaste tu contraseña?"}
+                sx={{ color: "black", textDecoration: "none" }}
+                onclick={handleOpenModalSendEmail}
+              />
+
+              <ButtonComponent
+                type={"link"}
                 sx={{ color: "red", textDecoration: "none" }}
-              >
-                Regístrate
-              </Link>
-            </Typography>
-          </Box>
+                buttonText={"Regístrate"}
+                onclick={handleOpenModalRegister}
+              />
+            </BoxComponent>
+            <ModalComponent>
+              {optionModal === "Register" ? <Register /> : <SendEmail />}
+            </ModalComponent>
+          </BoxComponent>
         </CardComponent>
-      </Box>
+      </BoxComponent>
     </Container>
   );
 };

@@ -5,11 +5,16 @@ type AuthParams = {
   firstName?: string;
   lastName?: string;
   email?: string;
-  age?: 0;
+  age?: number;
   gender?: string;
   password?: string;
   IdentificationType?: string;
-  identificationNumber?: 0;
+  identificationNumber?: number;
+};
+
+type ForRecoveryParams = {
+  email?: string | null;
+  password?: string;
 };
 
 class ApiAuth extends BaseService {
@@ -44,7 +49,7 @@ class ApiAuth extends BaseService {
     }
   }
 
-  async postForgotPassword(data: AuthParams) {
+  async postForgotPassword(data: ForRecoveryParams) {
     try {
       const response = await this.instance.put("/forgotPassword", data, {
         headers: {
@@ -57,10 +62,10 @@ class ApiAuth extends BaseService {
     }
   }
 
-  async postSendEmailForgotPassword(data: AuthParams) {
+  async postSendEmailForgotPassword(email: string) {
     try {
       const response = await this.instance.post(
-        `/sendEmailForgotPassword?email=${data}`
+        `/sendEmailForgotPassword?email=${email}`
       );
       return response.data; //devuelve la respuesta
     } catch (error) {

@@ -1,15 +1,16 @@
 import React, { FC } from "react";
-import { TextField } from "@mui/material";
+import { TextField, SxProps, Theme } from "@mui/material";
 
 interface PropsText {
   nameText: string;
   labelText: string;
   typeText?: string;
-  valueText: string;
+  valueText: string | Number;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
   autoFocus?: boolean;
   autoComplete?: string;
+  sx?: SxProps<Theme>;
 }
 
 const TextComponent: FC<PropsText> = ({
@@ -21,6 +22,7 @@ const TextComponent: FC<PropsText> = ({
   required,
   autoFocus,
   autoComplete,
+  sx,
 }) => {
   return (
     <TextField
@@ -34,6 +36,7 @@ const TextComponent: FC<PropsText> = ({
       onChange={onChange}
       required={required}
       autoComplete={autoComplete}
+      sx={sx}
     />
   );
 };

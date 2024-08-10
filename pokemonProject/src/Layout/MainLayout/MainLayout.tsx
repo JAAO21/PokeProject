@@ -17,7 +17,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     <Grid
       container
       direction="column"
-      style={{ minHeight: "100vh", minWidth: "100%", boxSizing: "border-box" }}
+      style={{ minHeight: "100%", minWidth: "100%", boxSizing: "border-box" }}
     >
       <Grid item sx={{ width: "100%" }}>
         {token ? <HeaderPrivate /> : <HeaderPublic />}

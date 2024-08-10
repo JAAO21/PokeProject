@@ -5,3 +5,4 @@ export { default as PokemonComponent } from "./Pokemon/Pokemon";
 export { default as CardComponent } from "./Card/Card";
 export { default as TextComponent } from "./Text/Text";
 export { default as TypographyComponent } from "./Typography/Typography";
+export { default as ModalComponent } from "./Modal/Modal";

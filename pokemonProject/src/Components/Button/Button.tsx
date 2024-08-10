@@ -24,6 +24,7 @@ const ButtonComponent: FC<ButtonParams> = ({
   isSend,
   component,
   to,
+  sx,
 }) => {
   return (
     <ThemeProvider theme={theme}>
@@ -35,6 +36,7 @@ const ButtonComponent: FC<ButtonParams> = ({
         startIcon={isSend ? <SendIcon /> : Icon ? <Icon /> : null}
         style={style}
         {...(to ? { to } : {})}
+        sx={sx}
       >
         {buttonText}
       </Button>

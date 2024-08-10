@@ -1,4 +1,5 @@
 import { SxProps, Theme } from "@mui/material";
+
 export interface ChildrenSxInterface {
   children?: React.ReactNode;
   sx?: SxProps<Theme>;
@@ -19,4 +20,6 @@ export interface ChildrenSxInterface {
     | "h5"
     | "h6";
   component?: React.ElementType;
+  color?: string;
+  align?: "left" | "right" | "inherit" | "center" | "justify" | undefined;
 }

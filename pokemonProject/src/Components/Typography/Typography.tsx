@@ -7,9 +7,11 @@ const TypographyComponent: FC<ChildrenSxInterface> = ({
   children,
   sx,
   variant,
+  color,
+  align,
 }) => {
   return (
-    <Typography variant={variant} sx={sx}>
+    <Typography variant={variant} sx={sx} color={color} align={align}>
       {children}
     </Typography>
   );

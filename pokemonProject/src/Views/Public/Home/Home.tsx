@@ -82,7 +82,6 @@ const Home = () => {
         sx={{
           flex: 1,
           display: "flex",
-
           flexWrap: "wrap",
           justifyContent: "center",
           gap: "20px",
