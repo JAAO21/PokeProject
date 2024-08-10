@@ -1,21 +1,23 @@
 import GitHubIcon from "@mui/icons-material/GitHub";
 import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon";
 import "./main.css";
-import { BoxComponent } from "../../../Components";
+import { BoxComponent, TypographyComponent } from "../../../Components";
 
 const FooterComponent = () => {
   return (
-    <footer>
+    <footer className="footer">
       <BoxComponent className="divFooterIcons">
-        <a href="https://pokeapi.co/api/v2/pokemon">
+        <a href="https://pokeapi.co/api/v2/pokemon" className="footer-link">
           <CatchingPokemonIcon />
         </a>
-        <a href="https://github.com/">
+        <a href="https://github.com/" className="footer-link">
           <GitHubIcon />
         </a>
       </BoxComponent>
       <BoxComponent>
-        <p className="footerkeyword">Copyrigth @jaao21</p>
+        <TypographyComponent variant="body2" className="footer-text">
+          Copyright &copy; 2024 @jaao21
+        </TypographyComponent>
       </BoxComponent>
     </footer>
   );
