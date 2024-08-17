@@ -8,20 +8,19 @@ export const usePokemon = () => {
   const [copyData, setCopyData] = useState<PokeProps[]>([]);
   const { loading, setLoading } = useLoading();
   const dispatch = useDispatch();
-  const pokemonService = new PokemonService();
 
   useEffect(() => {
     const axioData = async () => {
       setLoading(true); // Establecer loading en true al comenzar la solicitud
       try {
         let response = [];
-        const responseData = await pokemonService.getAllPokemon("pokemon");
+        const responseData = await PokemonService();
         if (responseData) {
           const pokemonList = responseData.data.results;
           response = await Promise.all(
             pokemonList.map(async (pokemon: any) => {
               const pokemonId = extractPokemonIdFromUrl(pokemon.url);
-              const pokemonResponse = await pokemonService.getAllPokemon(
+              const pokemonResponse = await PokemonService(
                 `pokemon/${pokemonId}`
               );
               return pokemonResponse.data;

@@ -17,14 +17,13 @@ type ForRecoveryParams = {
   password?: string;
 };
 
-class ApiAuth extends BaseService {
-  constructor() {
-    super(api); // Utiliza la URL base específica para la API de Pokémon
-  }
+const service = BaseService.getInstance(api);
+const axiosInstance = service.getAxiosInstance();
 
-  async postLogin(data: AuthParams): Promise<any> {
+class ApiAuth extends BaseService {
+  static async postLogin(data: AuthParams): Promise<any> {
     try {
-      const response = await this.instance.post("/signIn", data, {
+      const response = await axiosInstance.post("/signIn", data, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -35,9 +34,9 @@ class ApiAuth extends BaseService {
     }
   }
 
-  async postRegister(data: AuthParams): Promise<any> {
+  static async postRegister(data: AuthParams): Promise<any> {
     try {
-      const response = await this.instance.post("/signUp", data, {
+      const response = await axiosInstance.post("/signUp", data, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -51,7 +50,7 @@ class ApiAuth extends BaseService {
 
   async postForgotPassword(data: ForRecoveryParams) {
     try {
-      const response = await this.instance.put("/forgotPassword", data, {
+      const response = await axiosInstance.put("/forgotPassword", data, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -64,7 +63,7 @@ class ApiAuth extends BaseService {
 
   async postSendEmailForgotPassword(email: string) {
     try {
-      const response = await this.instance.post(
+      const response = await axiosInstance.post(
         `/sendEmailForgotPassword?email=${email}`
       );
       return response.data; //devuelve la respuesta
