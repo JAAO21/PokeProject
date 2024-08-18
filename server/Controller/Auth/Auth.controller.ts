@@ -1,6 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
 import { genSalt, hash, compare } from "bcrypt";
+
+import EventManager from "../../Audit/EventManager";
+import AuditService from "../../Audit/AuditService";
 import jwt from "jsonwebtoken";
 import config from "../../config";
 import middlewaresNodemailer from "../../Middlewares/Nodemailer.middleware";
@@ -21,6 +24,11 @@ type AuthProps = {
   IdentificationType: string;
   identificationNumber: number;
 };
+
+const eventManager = new EventManager();
+const auditService = new AuditService();
+
+eventManager.addObserver(auditService);
 
 /**
  * Encriptra la contraseña y envia los datos a la función Register
@@ -85,10 +93,10 @@ export const SignUp = async (
     });
 
     await newUser.save();
-
+    eventManager.notifyObservers("UserCreated", newUser);
     return res.status(201).send("User created successfully");
   } catch (err) {
-    console.log(err);
+    console.error(err);
     next(err);
   }
 };
@@ -136,6 +144,7 @@ export const SignIn = async (
     compare(password, findEmail[0].password)
       .then((result) => {
         if (result) {
+          eventManager.notifyObservers("UserLogin", email);
           return res.header("authorization", accesToken).json({
             message: "Autenticated user",
             token: accesToken,
@@ -216,6 +225,7 @@ const UpdateUser = async (
     );
 
     if (updateUser) {
+      eventManager.notifyObservers("UserUpdated", updateUser);
       return res.status(200).send("The password of the user has been updated.");
     } else {
       return next(
