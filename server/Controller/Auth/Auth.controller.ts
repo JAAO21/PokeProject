@@ -10,20 +10,11 @@ import middlewaresNodemailer from "../../Middlewares/Nodemailer.middleware";
 import AuthError from "../../Errors/Auth/Auth.error";
 
 import ModelFactory from "../../Models/Factory.model";
+import { AuthProps, AuthSigInProps } from "./Type.controllet";
+
 const UserModel = ModelFactory.createModel("User");
 
 const { JWT_APIKEY } = config;
-
-type AuthProps = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  age: number;
-  gender: string;
-  password: string;
-  IdentificationType: string;
-  identificationNumber: number;
-};
 
 const eventManager = new EventManager();
 const auditService = new AuditService();
@@ -120,11 +111,6 @@ const hashPassword = async (password: string): Promise<string> => {
  * @param {import('express').Request} req - Objeto de solicitud de Express
  * @param {import('express').Response} res - Objeto de respuesta de Express
  */
-
-type AuthSigInProps = {
-  email: string;
-  password: string;
-};
 
 export const SignIn = async (
   req: AuthSigInProps,
