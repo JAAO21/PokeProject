@@ -1,3 +1,4 @@
+import { AxiosInstance } from "axios";
 import { api } from "../../../../../config";
 import BaseService from "../../axiosAPi";
 
@@ -17,13 +18,18 @@ type ForRecoveryParams = {
   password?: string;
 };
 
-const service = BaseService.getInstance(api);
-const axiosInstance = service.getAxiosInstance();
-
 class ApiAuth extends BaseService {
+  private static serviceInstance: BaseService;
+  private static axiosInstance: AxiosInstance;
+
+  constructor() {
+    super(api);
+    ApiAuth.serviceInstance = BaseService.getInstance(api);
+    ApiAuth.axiosInstance = ApiAuth.serviceInstance.getAxiosInstance();
+  }
   static async postLogin(data: AuthParams): Promise<any> {
     try {
-      const response = await axiosInstance.post("/signIn", data, {
+      const response = await ApiAuth.axiosInstance.post("/signIn", data, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -36,7 +42,7 @@ class ApiAuth extends BaseService {
 
   static async postRegister(data: AuthParams): Promise<any> {
     try {
-      const response = await axiosInstance.post("/signUp", data, {
+      const response = await ApiAuth.axiosInstance.post("/signUp", data, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -50,11 +56,15 @@ class ApiAuth extends BaseService {
 
   async postForgotPassword(data: ForRecoveryParams) {
     try {
-      const response = await axiosInstance.put("/forgotPassword", data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await ApiAuth.axiosInstance.put(
+        "/forgotPassword",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       return response.data; //devuelve la respuesta
     } catch (error) {
       throw error; //manejo de errores
@@ -63,7 +73,7 @@ class ApiAuth extends BaseService {
 
   async postSendEmailForgotPassword(email: string) {
     try {
-      const response = await axiosInstance.post(
+      const response = await ApiAuth.axiosInstance.post(
         `/sendEmailForgotPassword?email=${email}`
       );
       return response.data; //devuelve la respuesta

@@ -3,9 +3,14 @@ import BaseService from "../axiosAPi";
 
 const PokemonService = async (path?: string) => {
   const service = BaseService.getInstance(apiPokeApi);
+
   const axiosInstance = service.getAxiosInstance();
   try {
-    const response = await axiosInstance.get(`/${path}`);
+    if (path) {
+      const response = await axiosInstance.get(`${path}`);
+      return response;
+    }
+    const response = await axiosInstance.get("");
     return response; // Devuelve los datos de la respuesta
   } catch (error) {
     throw error;

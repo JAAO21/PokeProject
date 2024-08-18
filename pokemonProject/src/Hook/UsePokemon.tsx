@@ -17,17 +17,15 @@ export const usePokemon = () => {
         const responseData = await PokemonService();
         if (responseData) {
           const pokemonList = responseData.data.results;
+
           response = await Promise.all(
             pokemonList.map(async (pokemon: any) => {
               const pokemonId = extractPokemonIdFromUrl(pokemon.url);
-              const pokemonResponse = await PokemonService(
-                `pokemon/${pokemonId}`
-              );
+              const pokemonResponse = await PokemonService(`/${pokemonId}`);
               return pokemonResponse.data;
             })
           );
         }
-
         dispatch(allPokemon(response.length > 1 ? response : []));
         setCopyData(response.length > 1 ? response : []);
       } catch (error) {

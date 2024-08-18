@@ -7,7 +7,7 @@
 .divFooterIcons {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 55px;
   margin-bottom: 10px;
 }
 footer-link {
@@ -23,4 +23,9 @@ footer-link {
   margin-top: 10px;
   font-size: 14px;
   color: #bbb;
+}
+
+.css-i4bv87-MuiSvgIcon-root {
+  color: black;
+  font-size: 1.8rem;
 }
