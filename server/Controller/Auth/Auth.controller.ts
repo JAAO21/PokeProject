@@ -2,8 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
 import { genSalt, hash, compare } from "bcrypt";
 
-import EventManager from "../../Audit/EventManager";
-import AuditService from "../../Audit/AuditService";
+import eventManager from "../../Audit/EventManagerInstance";
 import jwt from "jsonwebtoken";
 import config from "../../config";
 import middlewaresNodemailer from "../../Middlewares/Nodemailer.middleware";
@@ -15,11 +14,6 @@ import { AuthProps, AuthSigInProps } from "./Type.controllet";
 const UserModel = ModelFactory.createModel("User");
 
 const { JWT_APIKEY } = config;
-
-const eventManager = new EventManager();
-const auditService = new AuditService();
-
-eventManager.addObserver(auditService);
 
 /**
  * Encriptra la contraseña y envia los datos a la función Register
@@ -173,22 +167,19 @@ export const ForgotPassword = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { email, password } = req;
-  const saltRounds = 10;
-  const findEmail = await UserModel.find({ email });
-  if (findEmail.length === 0)
-    return next(new AuthError("User not exist in the bd"));
-  genSalt(saltRounds)
-    .then((salt) => {
-      hash(password, salt).then((hash) => {
-        const password = hash;
-        UpdateUser(findEmail[0].id, password, res, next);
-      });
-    })
-    .catch((err) => {
-      console.error(err);
-      next(err);
-    });
+  try {
+    const { email, password } = req;
+    const saltRounds = 10;
+    const findEmail = await UserModel.find({ email });
+    if (findEmail.length === 0)
+      return next(new AuthError("User not exist in the bd"));
+
+    const salt = await genSalt(saltRounds);
+    const hashedPassword = await hash(password, salt);
+    await UpdateUser(findEmail[0].id, hashedPassword, res, next);
+  } catch (error) {
+    next(error);
+  }
 };
 
 /**

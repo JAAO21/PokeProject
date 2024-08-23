@@ -23,3 +23,9 @@ export interface IPokemon extends Document {
   user: mongoose.Schema.Types.ObjectId;
   createdAt: Date;
 }
+
+export interface IAudit extends Document {
+  event: string;
+  data: any;
+  timestamp: Date;
+}
