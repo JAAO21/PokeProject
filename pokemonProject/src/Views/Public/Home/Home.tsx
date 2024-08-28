@@ -1,46 +1,24 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
 //navegacion
 import { Link } from "react-router-dom";
 
 // iconos material mui
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
-//hook personalizado
-import { usePokemon } from "../../../Hook/UsePokemon";
-
 //componentes
 import {
   PokemonComponent,
-  TextComponent,
   TypographyComponent,
   BoxComponent,
+  SearchComponent,
 } from "../../../Components";
 
-import { RootState } from "../../../Store/Types/StoreTypes";
+//hooks
+import { usePokemon } from "../../../Hook/UsePokemon";
 
 //estilos
 import "./main.css";
 const Home = () => {
-  const pokemons = useSelector(
-    (state: RootState) => state.pokemons.pokemonData
-  ); // Accediendo al estado global de los pokemons desde Redux
-  const [keyword, setKeyword] = useState("");
-
-  const { loading, setCopyData, copyData } = usePokemon();
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!keyword) {
-      setCopyData(pokemons);
-    }
-    const find = copyData.filter((data) => data.name === keyword);
-    if (find.length > 0) {
-      setCopyData(find);
-    } else {
-      alert("No se encuentra ese pokemon");
-    }
-  };
+  const { loading, copyData } = usePokemon();
   return (
     <BoxComponent
       sx={{
@@ -59,24 +37,7 @@ const Home = () => {
         Busqué su pokemon
       </TypographyComponent>
 
-      <BoxComponent
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <form onSubmit={handleSubmit}>
-          <TextComponent
-            nameText="keyword"
-            labelText="..."
-            valueText={keyword}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setKeyword(e.target.value)
-            }
-          />
-        </form>
-      </BoxComponent>
+      <SearchComponent />
 
       <BoxComponent
         sx={{
@@ -87,7 +48,7 @@ const Home = () => {
           gap: "20px",
         }}
       >
-        {pokemons?.map((data, index) => (
+        {copyData?.map((data, index) => (
           <PokemonComponent
             key={index}
             data={data}

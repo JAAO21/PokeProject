@@ -10,6 +10,8 @@ import { useLoading } from "../../Hook/UseLoading";
 
 import { RootState } from "../../Store/Types/StoreTypes";
 
+import { initializeAuth } from "../../Layout/Functions/InitializeAuth";
+
 interface AuthContextType {
   isAuthenticated: boolean;
   handleLogin: (token: string) => void;
@@ -30,17 +32,7 @@ const AuthProvider: FC<ChildrenSxInterface> = ({ children }) => {
   const { loading, setLoading } = useLoading();
 
   useEffect(() => {
-    const initializeAuth = async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        dispatch(login(token));
-      } else {
-        dispatch(logout());
-      }
-      setLoading(false);
-    };
-
-    initializeAuth();
+    initializeAuth(dispatch, setLoading);
   }, [dispatch, setLoading]);
 
   if (loading) return <p>Cargando</p>;

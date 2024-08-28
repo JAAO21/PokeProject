@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useAuth } from "../../../Hook/UseAuth";
 
 //componentes
 import {
@@ -7,28 +7,30 @@ import {
   ButtonComponent,
   BoxComponent,
   TypographyComponent,
+  AlertMessage,
 } from "../../../Components";
 
-//servicios de api
-import ApiAuth from "../../../Services/Axios/Api/Auth/apiAuth";
 import { Container } from "@mui/material";
 const SendEmail = () => {
-  const [email, setEmail] = useState("");
-  const apiAuth = new ApiAuth();
+  const {
+    sendEmail,
+    auth: { email },
+    errors,
+    setAuth,
+    setErrors,
+    loading,
+    setLoading,
+  } = useAuth();
+
   const handleSendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (email) {
-      const apiAxiosSendEmail = await apiAuth.postSendEmailForgotPassword(
-        email
-      );
-      if (apiAxiosSendEmail.status === 200) {
-        localStorage.setItem("email", email);
-        alert("mensaje enviado");
-      } else {
-        alert("Su cuenta no existe en el sistema");
-      }
+    try {
+      await sendEmail();
+    } catch (err) {
+      setErrors("Porfavor digite su correo");
     }
   };
+
   return (
     <Container
       component="main"
@@ -44,7 +46,6 @@ const SendEmail = () => {
         sx={{
           display: "flex",
           width: "500px",
-
           flexDirection: "column",
           justifyContent: "center",
           borderRadius: 2,
@@ -72,8 +73,11 @@ const SendEmail = () => {
                 nameText="email"
                 labelText="Email"
                 typeText="email"
-                valueText={email}
-                onChange={(e) => setEmail(e.target.value)}
+                valueText={email || ""}
+                placeholder="..."
+                onChange={(e) =>
+                  setAuth((prev) => ({ ...prev, email: e.target.value }))
+                }
                 required={true}
               />
               <BoxComponent>
@@ -88,6 +92,12 @@ const SendEmail = () => {
           </form>
         </CardComponent>
       </BoxComponent>
+      <AlertMessage
+        errors={errors}
+        loading={loading}
+        setLoading={setLoading}
+        setErrors={setErrors}
+      />
     </Container>
   );
 };

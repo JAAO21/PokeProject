@@ -11,6 +11,7 @@ interface PropsText {
   autoFocus?: boolean;
   autoComplete?: string;
   sx?: SxProps<Theme>;
+  placeholder?: string;
 }
 
 const TextComponent: FC<PropsText> = ({
@@ -23,6 +24,7 @@ const TextComponent: FC<PropsText> = ({
   autoFocus,
   autoComplete,
   sx,
+  placeholder,
 }) => {
   return (
     <TextField
@@ -37,6 +39,7 @@ const TextComponent: FC<PropsText> = ({
       required={required}
       autoComplete={autoComplete}
       sx={sx}
+      placeholder={placeholder}
     />
   );
 };

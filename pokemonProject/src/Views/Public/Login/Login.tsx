@@ -1,17 +1,14 @@
 //contexto y estado
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 import { Avatar, Container } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
-//redux login(token)
-import { AuthContext } from "../../../Layout/AuthProvider/AuthProvider.tsx";
-
 //context modal
 import { useModal } from "../../../Context/ModalContext.tsx";
 
-//Apiaxios
-import ApiAuth from "../../../Services/Axios/Api/Auth/apiAuth.tsx";
+//hook
+import { useAuth } from "../../../Hook/UseAuth.tsx";
 
 //views
 import Register from "../Register/Register.tsx";
@@ -35,9 +32,8 @@ const Login = () => {
     password: "",
   });
   const [optionModal, setOptionModal] = useState("");
-  const postLogin = new ApiAuth();
-  const { handleLogin } = useContext(AuthContext);
 
+  const { login } = useAuth();
   const { openModal } = useModal();
 
   const handleOpenModalRegister = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -62,14 +58,7 @@ const Login = () => {
     if (!auth.email || !auth.password) {
       alert("Digite su usuario o contraseña");
     } else {
-      const apiAxiosSignIn = await postLogin.postLogin(auth);
-      if (apiAxiosSignIn.status === 200 || apiAxiosSignIn !== "undefined") {
-        handleLogin(apiAxiosSignIn.data.token);
-
-        console.log(apiAxiosSignIn.data.token);
-      } else {
-        console.log("error en el servidor");
-      }
+      login(auth);
     }
   };
 

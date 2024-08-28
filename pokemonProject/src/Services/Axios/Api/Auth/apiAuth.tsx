@@ -14,7 +14,7 @@ type AuthParams = {
 };
 
 type ForRecoveryParams = {
-  email?: string | null;
+  email?: string;
   password?: string;
 };
 
@@ -27,7 +27,7 @@ class ApiAuth extends BaseService {
     ApiAuth.serviceInstance = BaseService.getInstance(api);
     ApiAuth.axiosInstance = ApiAuth.serviceInstance.getAxiosInstance();
   }
-  static async postLogin(data: AuthParams): Promise<any> {
+  async postLogin(data: AuthParams): Promise<any> {
     try {
       const response = await ApiAuth.axiosInstance.post("/signIn", data, {
         headers: {
@@ -40,7 +40,7 @@ class ApiAuth extends BaseService {
     }
   }
 
-  static async postRegister(data: AuthParams): Promise<any> {
+  async postRegister(data: AuthParams): Promise<any> {
     try {
       const response = await ApiAuth.axiosInstance.post("/signUp", data, {
         headers: {

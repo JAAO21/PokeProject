@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 import { Container } from "@mui/material";
-import ApiAuth from "../../../Services/Axios/Api/Auth/apiAuth";
+
+import { useAuth } from "../../../Hook/UseAuth";
 
 import {
   CardComponent,
@@ -16,8 +17,7 @@ const ForgotPassword = () => {
     password: "",
     confirmPassword: "",
   });
-  const navigate = useNavigate();
-  const apiAuth = new ApiAuth();
+  const { resetPassword, setAuth } = useAuth();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordState({
@@ -30,17 +30,12 @@ const ForgotPassword = () => {
     event.preventDefault();
     if (passwordState.password === passwordState.confirmPassword) {
       const data = {
-        email: localStorage.getItem("email"),
+        email: localStorage.getItem("email") || "",
         password: passwordState.password,
       };
-      const apiAxiosForgotPassword = await apiAuth.postForgotPassword(data);
-      if (apiAxiosForgotPassword.status(200)) {
-        localStorage.removeItem("email");
-        alert("Su contraseña ha sido actualizada");
-        navigate("/login");
-      } else {
-        alert("Error en el servidor"); //manejar errores
-      }
+
+      setAuth(data);
+      resetPassword();
     } else {
       alert("Las contraseñas no son iguales");
     }

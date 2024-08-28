@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, FC } from "react";
 import { ChildrenSxInterface } from "../Layout/Types/ChildrenSxInterface";
-
+import { useOpen } from "../Hook/UseOpen";
 interface ModalContextType {
   isOpen: boolean;
   openModal: () => void;
@@ -14,7 +14,7 @@ const ModalContext = createContext<ModalContextType>({
 });
 
 export const ModalProvider: FC<ChildrenSxInterface> = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, setIsOpen } = useOpen();
 
   const openModal = () => setIsOpen(true);
 

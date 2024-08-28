@@ -1,13 +1,16 @@
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import PokemonService from "../Services/Axios/ApiPokemon/ApiPokemon.tsx";
 import { useLoading } from "./UseLoading.tsx";
-import { allPokemon } from "../Services/Pokemons/PokemonSlice.tsx";
-import { PokeProps } from "../Layout/Types/PokemonType.tsx";
+import { allPokemon, setCopyData } from "../Services/Pokemons/PokemonSlice.tsx";
+
+import { RootState } from "../Store/Store.tsx";
 export const usePokemon = () => {
-  const [copyData, setCopyData] = useState<PokeProps[]>([]);
-  const { loading, setLoading } = useLoading();
   const dispatch = useDispatch();
+  const copyData = useSelector((state: RootState) => state.pokemons.copyData);
+
+  /* const [copyData, setCopyData] = useState<PokeProps[]>([]); */
+  const { loading, setLoading } = useLoading();
 
   useEffect(() => {
     const axioData = async () => {
@@ -27,7 +30,6 @@ export const usePokemon = () => {
           );
         }
         dispatch(allPokemon(response.length > 1 ? response : []));
-        setCopyData(response.length > 1 ? response : []);
       } catch (error) {
         console.error(error);
         //falta manejo de erorres
@@ -37,7 +39,12 @@ export const usePokemon = () => {
     };
     axioData();
   }, []);
-  return { loading, setLoading, copyData, setCopyData };
+
+  const updateCopyData = (data: any[]) => {
+    dispatch(setCopyData(data));
+  };
+
+  return { loading, setLoading, copyData, updateCopyData };
 };
 
 const extractPokemonIdFromUrl = (url: string) => {
