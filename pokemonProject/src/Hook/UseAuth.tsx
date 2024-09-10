@@ -1,90 +1,78 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Layout/AuthProvider/AuthProvider";
-import ApiAuth from "../Services/Axios/Api/Auth/apiAuth";
 import { useLoading } from "./UseLoading";
 import { useInfoState } from "./UseInfoState";
+import { apiAuth } from "../Layout/Functions/ApiAuth";
 
 type AuthParams = {
+  authApiType: string;
+  firstName?: string;
+  lastName?: string;
   email: string;
+  age?: number;
+  gender?: string;
   password?: string;
+  IdentificationType?: string;
+  identificationNumber?: number;
 };
 
 export const useAuth = () => {
   const [auth, setAuth] = useState<Partial<AuthParams>>({});
-  const api = new ApiAuth();
   const { handleLogin } = useContext(AuthContext);
   const { loading, setLoading } = useLoading();
   const { errors, setErrors, succes, setSucces } = useInfoState();
   const navigate = useNavigate();
 
-  const login = async () => {
+  const UserAuth = async (authApiType: string) => {
+    const { login, register, resetPassword, sendEmail } = await apiAuth({
+      setSucces,
+      setLoading,
+      setErrors,
+      handleLogin,
+      auth,
+      navigate,
+    });
     try {
       setLoading(true);
-      const apiAxiosSignIn = await api.postLogin(auth);
-      if (apiAxiosSignIn.token) {
-        handleLogin(apiAxiosSignIn.token);
-      } else {
-        console.error("Data no found");
-        setErrors("Login failed: token not found");
-      }
-    } catch (err) {
-      console.error(err);
-      setErrors("Login failed" + err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  const resetPassword = async () => {
-    try {
-      setLoading(true);
-      const apiResetPassword = await api.postForgotPassword(auth);
-      if (apiResetPassword) {
-        alert("Su contraseña ha sido actualizada");
-        localStorage.removeItem("email");
-        navigate("/login");
-      }
-    } catch (err) {
-      console.error(err);
-      setErrors("Reset password failed" + err);
-    } finally {
-      setLoading(false);
-    }
-  };
+      switch (authApiType) {
+        case "Login":
+          await login();
+          break;
 
-  const sendEmail = async () => {
-    //terminar
-    try {
-      setLoading(true);
-      if (auth.email) {
-        const apiAxiosSendEmail = await api.postSendEmailForgotPassword(
-          auth.email
-        );
-        if (apiAxiosSendEmail.status === 200) {
-          localStorage.setItem("email", auth.email);
-          setSucces("El correo fue enviado ...");
-        } else {
-          setErrors("Your email no exist in the system");
-        }
+        case "Reset Password":
+          await resetPassword();
+          break;
+
+        case "Send Email":
+          await sendEmail();
+          break;
+
+        case "Register":
+          await register();
+          break;
+
+        default:
+          setErrors(`EL tipe autenticación es invalid :${authApiType}`);
+          break;
       }
-    } catch (err) {
-      console.error(err);
-      setErrors("Send email failed" + err);
+    } catch (error) {
+      console.error(error);
+      setErrors(`${authApiType} failed` + error);
     } finally {
       setLoading(false);
     }
   };
   return {
-    login,
-    resetPassword,
-    sendEmail,
+    UserAuth,
+    setSucces,
     setAuth,
     setErrors,
     setLoading,
-    loading,
-    auth,
-    errors,
     succes,
+    auth,
+    loading,
+    errors,
   };
 };

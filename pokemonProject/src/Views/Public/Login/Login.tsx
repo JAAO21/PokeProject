@@ -22,18 +22,25 @@ import {
   ButtonComponent,
   BoxComponent,
   ModalComponent,
+  AlertMessage,
 } from "../../../Components";
 
 import "./main.css";
 
 const Login = () => {
-  const [auth, setAuth] = useState({
-    email: "",
-    password: "",
-  });
   const [optionModal, setOptionModal] = useState("");
 
-  const { login } = useAuth();
+  const {
+    UserAuth,
+    setSucces,
+    setAuth,
+    setErrors,
+    setLoading,
+    succes,
+    auth,
+    loading,
+    errors,
+  } = useAuth();
   const { openModal } = useModal();
 
   const handleOpenModalRegister = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -55,15 +62,18 @@ const Login = () => {
 
   const handleLoginForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!auth.email || !auth.password) {
-      alert("Digite su usuario o contraseña");
-    } else {
-      login(auth);
-    }
+
+    await UserAuth("Login");
   };
 
   return (
     <Container component="main" maxWidth="xs">
+      <AlertMessage
+        stateAlert={errors ? errors : succes}
+        setErrors={errors ? setErrors : setSucces}
+        loading={loading}
+        setLoading={setLoading}
+      />
       <BoxComponent
         sx={{
           marginTop: 8,
@@ -108,7 +118,7 @@ const Login = () => {
                 nameText="email"
                 labelText="Email"
                 typeText="email"
-                valueText={auth.email}
+                valueText={auth.email || ""}
                 onChange={handleChange}
                 autoFocus
               />
@@ -117,7 +127,7 @@ const Login = () => {
                 nameText="password"
                 labelText="Contraseña"
                 typeText="password"
-                valueText={auth.password}
+                valueText={auth.password || ""}
                 onChange={handleChange}
                 autoComplete="current-password"
               />

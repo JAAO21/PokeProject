@@ -13,22 +13,21 @@ import {
 import { Container } from "@mui/material";
 const SendEmail = () => {
   const {
-    sendEmail,
-    auth: { email },
-    errors,
+    UserAuth,
     setAuth,
     setErrors,
-    loading,
     setLoading,
+    setSucces,
+    loading,
+    succes,
+    auth: { email },
+    errors,
   } = useAuth();
 
   const handleSendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      await sendEmail();
-    } catch (err) {
-      setErrors("Porfavor digite su correo");
-    }
+
+    await UserAuth("Send Email");
   };
 
   return (
@@ -93,10 +92,10 @@ const SendEmail = () => {
         </CardComponent>
       </BoxComponent>
       <AlertMessage
-        errors={errors}
+        stateAlert={errors ? errors : succes}
+        setErrors={errors ? setErrors : setSucces}
         loading={loading}
         setLoading={setLoading}
-        setErrors={setErrors}
       />
     </Container>
   );

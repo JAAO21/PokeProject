@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 // Material mui
 import {
   Select,
@@ -10,9 +8,7 @@ import {
   Container,
 } from "@mui/material";
 
-//api service
-
-import ApiAuth from "../../../Services/Axios/Api/Auth/apiAuth";
+import { useAuth } from "../../../Hook/UseAuth";
 //components
 import {
   TextComponent,
@@ -20,47 +16,41 @@ import {
   ButtonComponent,
   BoxComponent,
   TypographyComponent,
+  AlertMessage,
 } from "../../../Components";
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    age: 0,
-    gender: "",
-    password: "",
-    IdentificationType: "",
-    identificationNumber: 0,
-  });
-  const api = new ApiAuth();
-
-  const navigate = useNavigate();
+  const {
+    auth,
+    errors,
+    succes,
+    loading,
+    setErrors,
+    setSucces,
+    setLoading,
+    setAuth,
+    UserAuth,
+  } = useAuth();
 
   const handleChange = (event: SelectChangeEvent<string>) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+    setAuth({ ...auth, [event.target.name]: event.target.value });
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Logica de formulario
 
-    if (formData.identificationNumber <= 0 || formData.age <= 0) {
-      alert("El valor no puede ser 0.");
-      return; // Prevent form submission
-    }
-
-    const apiAxiosSignUp = await api.postRegister(formData);
-    if (apiAxiosSignUp.status === 200) {
-      //redireccionar al login react router
-      navigate("/login");
-    } else {
-      alert("Problemas al crear el usuario");
-    }
+    await UserAuth("Register");
   };
 
   return (
     <Container component="main" maxWidth="xs">
+      <AlertMessage
+        stateAlert={errors ? errors : succes}
+        setErrors={errors ? setErrors : setSucces}
+        loading={loading}
+        setLoading={setLoading}
+      />
       <BoxComponent
         sx={{
           display: "flex",
@@ -91,7 +81,7 @@ const Register = () => {
               <TextComponent
                 nameText="firstName"
                 labelText="First Name"
-                valueText={formData.firstName}
+                valueText={auth.firstName || ""}
                 onChange={handleChange}
                 sx={{ width: "100%" }}
                 required={true}
@@ -99,7 +89,7 @@ const Register = () => {
               <TextComponent
                 nameText="lastName"
                 labelText="Last Name"
-                valueText={formData.lastName}
+                valueText={auth.lastName || ""}
                 onChange={handleChange}
                 sx={{ width: "100%" }}
                 required={true}
@@ -121,7 +111,7 @@ const Register = () => {
                   labelId="IdentificationType-select"
                   id="IdentificationType"
                   name="IdentificationType"
-                  value={formData.IdentificationType}
+                  value={auth.IdentificationType}
                   label="Tipo de identificación"
                   onChange={handleChange}
                   required={true}
@@ -137,7 +127,7 @@ const Register = () => {
                 nameText="identificationNumber"
                 labelText="Identificación"
                 typeText="number"
-                valueText={formData.identificationNumber}
+                valueText={auth.identificationNumber || 0}
                 onChange={handleChange}
                 required={true}
                 sx={{ width: "100%" }}
@@ -157,7 +147,7 @@ const Register = () => {
                   labelId="gender-select"
                   id="gender"
                   name="gender"
-                  value={formData.gender}
+                  value={auth.gender}
                   label=" Genero"
                   onChange={handleChange}
                   required={true}
@@ -172,7 +162,7 @@ const Register = () => {
                 nameText="age"
                 labelText="Edad"
                 typeText="number"
-                valueText={formData.age}
+                valueText={auth.age || 0}
                 onChange={handleChange}
                 required={true}
                 sx={{ width: "100%" }}
@@ -182,7 +172,7 @@ const Register = () => {
               <TextComponent
                 nameText="email"
                 labelText="Correo"
-                valueText={formData.email}
+                valueText={auth.email || ""}
                 onChange={handleChange}
                 required={true}
                 sx={{ width: "100%" }}
@@ -191,7 +181,7 @@ const Register = () => {
                 nameText="password"
                 labelText="Contraseña"
                 typeText="password"
-                valueText={formData.password}
+                valueText={auth.password || ""}
                 onChange={handleChange}
                 required={true}
                 sx={{ width: "100%" }}

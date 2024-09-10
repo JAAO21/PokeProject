@@ -71,7 +71,7 @@ class ApiAuth extends BaseService {
     }
   }
 
-  async postSendEmailForgotPassword(email: string) {
+  async postSendEmailForgotPassword(email: string | undefined) {
     try {
       const response = await ApiAuth.axiosInstance.post(
         `/sendEmailForgotPassword?email=${email}`

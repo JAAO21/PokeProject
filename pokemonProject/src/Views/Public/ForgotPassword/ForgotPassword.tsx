@@ -17,7 +17,7 @@ const ForgotPassword = () => {
     password: "",
     confirmPassword: "",
   });
-  const { resetPassword, setAuth } = useAuth();
+  const { UserAuth, setAuth } = useAuth();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordState({
@@ -35,7 +35,7 @@ const ForgotPassword = () => {
       };
 
       setAuth(data);
-      resetPassword();
+      UserAuth("Reset Password");
     } else {
       alert("Las contraseñas no son iguales");
     }
