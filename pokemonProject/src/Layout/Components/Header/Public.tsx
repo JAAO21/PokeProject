@@ -40,6 +40,7 @@ const HeaderPublic = () => {
                 to={routes?.path || ""}
                 Icon={routes?.icon || undefined}
                 buttonText={routes.path.replace("/", "")}
+                colorIcon="#000000"
               />
             ))}
           </BoxComponent>

@@ -14,6 +14,7 @@ interface PokemonProps {
     buttonText: string;
     component: React.ElementType;
     to: string;
+    colorIcon: string;
   };
 }
 
@@ -74,6 +75,7 @@ const PokemonComponent: FC<PokemonProps> = ({ data, btnData }) => {
             onclick={btnData.component ? undefined : btnData.handleClick}
             Icon={btnData.Icon}
             to={btnData.to ? btnData.to : ""}
+            colorIcon={btnData.colorIcon}
           />
         </BoxComponent>
       </BoxComponent>

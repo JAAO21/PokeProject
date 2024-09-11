@@ -14,4 +14,5 @@ export type ButtonParams = {
   component?: React.ElementType; // Para soportar cualquier tipo de componente
   to?: string; // `null` es innecesario si `to` es opcional
   sx?: SxProps<Theme>;
+  colorIcon?: string;
 };

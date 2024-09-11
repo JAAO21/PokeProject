@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 //manejo de paquetes para enrutar
 import { Routes, Route } from "react-router-dom";
 
@@ -5,12 +6,12 @@ import { Routes, Route } from "react-router-dom";
 import { dataRoute } from "./DataRoute";
 
 import LinearProgress from "@mui/material/LinearProgress";
-import { Suspense } from "react";
 
 //layout
 import MainLayout from "../../Layout/MainLayout/MainLayout";
 
 import { ErrorBoundary } from "../../Components";
+
 const HandleRoutesPublic = () => {
   return (
     <MainLayout>

@@ -17,8 +17,23 @@ import { usePokemon } from "../../../Hook/UsePokemon";
 
 //estilos
 import "./main.css";
+import { CircularProgress } from "@mui/material";
 const Home = () => {
   const { loading, copyData } = usePokemon();
+
+  if (loading)
+    return (
+      <BoxComponent
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh", // Para centrarlo verticalmente en la pantalla completa
+        }}
+      >
+        <CircularProgress color="inherit" size={68} />
+      </BoxComponent>
+    );
   return (
     <BoxComponent
       sx={{
@@ -57,6 +72,7 @@ const Home = () => {
               buttonText: "Favorito",
               Icon: FavoriteIcon,
               to: "/login",
+              colorIcon: "#ffffff",
             }}
           />
         ))}

@@ -25,6 +25,7 @@ const ButtonComponent: FC<ButtonParams> = ({
   component,
   to,
   sx,
+  colorIcon,
 }) => {
   return (
     <ThemeProvider theme={theme}>
@@ -33,7 +34,13 @@ const ButtonComponent: FC<ButtonParams> = ({
         type={type}
         variant={variant}
         onClick={onclick}
-        startIcon={isSend ? <SendIcon /> : Icon ? <Icon /> : null}
+        startIcon={
+          isSend ? (
+            <SendIcon sx={{ color: "#ffffff" }} />
+          ) : Icon ? (
+            <Icon sx={{ color: colorIcon }} />
+          ) : null
+        }
         style={style}
         {...(to ? { to } : {})}
         sx={sx}

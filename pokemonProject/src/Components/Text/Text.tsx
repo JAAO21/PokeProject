@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { TextField, SxProps, Theme } from "@mui/material";
+import { TextFieldProps } from "@mui/material/TextField";
 
 interface PropsText {
   nameText: string;
@@ -12,6 +13,7 @@ interface PropsText {
   autoComplete?: string;
   sx?: SxProps<Theme>;
   placeholder?: string;
+  variantText?: TextFieldProps["variant"];
 }
 
 const TextComponent: FC<PropsText> = ({
@@ -25,6 +27,7 @@ const TextComponent: FC<PropsText> = ({
   autoComplete,
   sx,
   placeholder,
+  variantText,
 }) => {
   return (
     <TextField
@@ -40,6 +43,7 @@ const TextComponent: FC<PropsText> = ({
       autoComplete={autoComplete}
       sx={sx}
       placeholder={placeholder}
+      variant={variantText || "outlined"}
     />
   );
 };

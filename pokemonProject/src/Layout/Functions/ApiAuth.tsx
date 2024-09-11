@@ -18,7 +18,6 @@ export const apiAuth = async ({
   const api = new ApiAuth();
 
   const login = async () => {
-    console.log("is login");
     try {
       setLoading(true);
       const apiAxiosSignIn = await api.postLogin(auth);
@@ -56,18 +55,15 @@ export const apiAuth = async ({
   const sendEmail = async () => {
     try {
       setLoading(true);
-      if (auth.email) {
-        const apiAxiosSendEmail = await api.postSendEmailForgotPassword(
-          auth.email
-        );
-        if (apiAxiosSendEmail.status === 200) {
-          localStorage.setItem("email", auth.email);
-          setSucces("El correo fue enviado ...");
-        } else {
-          setErrors("Your email no exist in the system");
-        }
+
+      const apiAxiosSendEmail = await api.postSendEmailForgotPassword(
+        auth.email
+      );
+      if (apiAxiosSendEmail.status === 200) {
+        localStorage.setItem("email", auth.email);
+        setSucces("El correo fue enviado ...");
       } else {
-        setErrors("Porfavor digite su correo");
+        setErrors("Your email no exist in the system");
       }
     } catch (err) {
       console.error(err);
@@ -80,16 +76,13 @@ export const apiAuth = async ({
   const register = async () => {
     try {
       setLoading(true);
-      if (!auth) {
-        setErrors("Los campos son obligatorios");
+
+      const apiAxiosRegister = await api.postRegister(auth);
+      if (apiAxiosRegister) {
+        setSucces("Su cuenta fue creada");
+        navigate("/login");
       } else {
-        const apiAxiosRegister = await api.postRegister(auth);
-        if (apiAxiosRegister) {
-          setSucces("Su cuenta fue creada");
-          navigate("/login");
-        } else {
-          setErrors("Error en el sistema");
-        }
+        setErrors("Error en el sistema");
       }
     } catch (err) {
     } finally {

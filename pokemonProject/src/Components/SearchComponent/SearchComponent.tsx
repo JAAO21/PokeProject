@@ -15,14 +15,16 @@ const SearchComponent = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     if (!keyword) {
-      updateCopyData(pokemons);
+      return updateCopyData(pokemons);
     }
     const find = filterDataByName(copyData, keyword);
-    if (find.length > 0 || find) {
+    if (find.length > 0) {
       updateCopyData(find);
     } else {
       alert("No se encuentra ese pokemon");
+      setKeyword("");
     }
   };
   return (
@@ -42,6 +44,7 @@ const SearchComponent = () => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setKeyword(e.target.value)
             }
+            variantText="standard"
           />
         </form>
       </BoxComponent>

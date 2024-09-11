@@ -200,6 +200,7 @@ const Register = () => {
                 type="submit"
                 variant="contained"
                 buttonText="Registrarte"
+                isSend={true}
               />
             </BoxComponent>
           </form>
