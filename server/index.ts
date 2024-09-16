@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import main from "./main";
@@ -19,7 +19,7 @@ const app = express();
 //module morgan
 app.use(morgan(config.MORGAN_LOG_LEVEL));
 //module cors
-app.use(cors());
+app.use(cors<Request>());
 //module lector json
 app.use(express.json());
 //module lector body
@@ -37,5 +37,3 @@ app.use(handleErrors);
 main(app);
 
 export default app;
-
-//observer,decorador,nyección de Dependencias

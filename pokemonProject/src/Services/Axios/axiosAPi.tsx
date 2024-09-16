@@ -22,8 +22,6 @@ class BaseService {
     );
   }
 
-  //Metodo estático para obtener una unica instancia singleton
-
   public static getInstance(baseURL: string): BaseService {
     if (!BaseService.instance) {
       BaseService.instance = new BaseService(baseURL);

@@ -1,4 +1,5 @@
 import ApiAuth from "../../Services/Axios/Api/Auth/apiAuth";
+import { ApiAuthErrors } from "./ApiAuthErrors";
 type AuthpParams = {
   setSucces: (succes: string) => void;
   setLoading: (state: boolean) => void;
@@ -21,15 +22,20 @@ export const apiAuth = async ({
     try {
       setLoading(true);
       const apiAxiosSignIn = await api.postLogin(auth);
+      console.log("hello");
+
       if (apiAxiosSignIn.token) {
         handleLogin(apiAxiosSignIn.token);
       } else {
         console.error("Data no found");
         setErrors("Login failed: token not found");
       }
-    } catch (err) {
-      console.error(err);
-      setErrors("Login failed" + err);
+    } catch (err: any) {
+      ApiAuthErrors({
+        errorType: err.response.data.status,
+        message: err.response.data.message,
+        setErrors,
+      });
     } finally {
       setLoading(false);
     }
@@ -44,9 +50,12 @@ export const apiAuth = async ({
         localStorage.removeItem("email");
         navigate("/login");
       }
-    } catch (err) {
-      console.error(err);
-      setErrors("Reset password failed" + err);
+    } catch (err: any) {
+      ApiAuthErrors({
+        errorType: err.response.data.status,
+        message: err.response.data.message,
+        setErrors,
+      });
     } finally {
       setLoading(false);
     }
@@ -65,7 +74,12 @@ export const apiAuth = async ({
       } else {
         setErrors("Your email no exist in the system");
       }
-    } catch (err) {
+    } catch (err: any) {
+      ApiAuthErrors({
+        errorType: err.response.data.status,
+        message: err.response.data.message,
+        setErrors,
+      });
       console.error(err);
       setErrors("Send email failed" + err);
     } finally {
@@ -84,7 +98,12 @@ export const apiAuth = async ({
       } else {
         setErrors("Error en el sistema");
       }
-    } catch (err) {
+    } catch (err: any) {
+      ApiAuthErrors({
+        errorType: err.response.data.status,
+        message: err.response.data.message,
+        setErrors,
+      });
     } finally {
       setLoading(false);
     }

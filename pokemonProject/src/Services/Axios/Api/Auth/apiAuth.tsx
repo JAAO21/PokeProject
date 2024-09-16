@@ -29,9 +29,10 @@ class ApiAuth extends BaseService {
   }
   async postLogin(data: AuthParams): Promise<any> {
     try {
-      const response = await ApiAuth.axiosInstance.post("/signIn", data, {
+      const response = await ApiAuth.axiosInstance.post("/auth/signIn", data, {
         headers: {
           "Content-Type": "application/json",
+          Accept: "application/json",
         },
       });
       return response.data; // Devuelve la respuesta
@@ -42,7 +43,7 @@ class ApiAuth extends BaseService {
 
   async postRegister(data: AuthParams): Promise<any> {
     try {
-      const response = await ApiAuth.axiosInstance.post("/signUp", data, {
+      const response = await ApiAuth.axiosInstance.post("/auth/signUp", data, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -74,7 +75,7 @@ class ApiAuth extends BaseService {
   async postSendEmailForgotPassword(email: string | undefined) {
     try {
       const response = await ApiAuth.axiosInstance.post(
-        `/sendEmailForgotPassword?email=${email}`
+        `auth/sendEmailForgotPassword?email=${email}`
       );
       return response.data; //devuelve la respuesta
     } catch (error) {
