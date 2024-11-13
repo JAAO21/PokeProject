@@ -19,13 +19,12 @@ type ForRecoveryParams = {
 };
 
 class ApiAuth extends BaseService {
-  private static serviceInstance: BaseService;
   private static axiosInstance: AxiosInstance;
 
   constructor() {
     super(api);
-    ApiAuth.serviceInstance = BaseService.getInstance(api);
-    ApiAuth.axiosInstance = ApiAuth.serviceInstance.getAxiosInstance();
+
+    ApiAuth.axiosInstance = this.axiosInstance;
   }
   async postLogin(data: AuthParams): Promise<any> {
     try {

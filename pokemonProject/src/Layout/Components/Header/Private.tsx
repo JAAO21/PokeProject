@@ -13,6 +13,7 @@ const HeaderPrivate = () => {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
+          backgroundColor: "#ffffff",
         }}
       >
         <Toolbar className="containerTolbar">

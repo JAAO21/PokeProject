@@ -1,11 +1,11 @@
 //manejo de paquetes para enrutar
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 //views privates
 import { routePrivate } from "./DataRoute";
 
 //layout
-import MainLayout from "../../Layout/MainLayout/MainLayout";
+import MainLayout from "../../Layout/MainLayout/MainLayoutPrivate";
 
 const HandleRoutesPrivates = () => {
   return (

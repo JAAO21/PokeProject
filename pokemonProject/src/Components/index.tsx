@@ -9,3 +9,4 @@ export { default as ModalComponent } from "./Modal/Modal";
 export { default as SearchComponent } from "./SearchComponent/SearchComponent";
 export { default as ErrorBoundary } from "./ErrorBoundary/ErrorBoundary";
 export { default as AlertMessage } from "./AlertMessage/AlertMessage";
+export { default as DrawerComponent } from "./Drawer/Drawer";
